@@ -15,7 +15,7 @@ class NitroGen:
 
     def main(self): 
         setTitle("Nitro Generator and Checker")
-        clear() 
+        clear()
         if os.name == "nt":
             print("")
 
@@ -28,11 +28,11 @@ class NitroGen:
         url = input(f"""{y}[{b}#{y}]{w} WebHook: """)
         time.sleep(1)
         clear()
-        webhook = url if url != "" else None 
-        valid = [] 
+        webhook = url if url != "" else None
+        valid = []
         invalid = 0 
 
-        for i in range(num): 
+        for _ in range(num):
             try: 
                 code = "".join(random.choices(
                     string.ascii_uppercase + string.digits + string.ascii_lowercase,
@@ -40,9 +40,7 @@ class NitroGen:
                 ))
                 url = f"https://discord.gift/{code}"
 
-                result = self.quickChecker(url, webhook)
-
-                if result:
+                if result := self.quickChecker(url, webhook):
                     valid.append(url)
                 else:
                     invalid += 1
@@ -68,7 +66,7 @@ class NitroGen:
 
             start = time.time()
 
-            for i in range(amount):
+            for _ in range(amount):
                 code = "".join(random.choices(
                     string.ascii_uppercase + string.digits + string.ascii_lowercase,
                     k = 16

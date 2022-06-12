@@ -17,9 +17,8 @@ donetokenlist = []
 def load_token():
     loaded_amount = 0
     try:
-        checklist = open(f"{filePath}", "r")
-        tokenlist = checklist.readlines()
-        checklist.close()
+        with open(f"{filePath}", "r") as checklist:
+            tokenlist = checklist.readlines()
         for token in tokenlist:
             donetokenlist.append(token[:-1])
             loaded_amount += 1
@@ -45,36 +44,33 @@ def checkvalidity():
             r1 = str(r1)
             if "429" not in r1:
                 break
-            if "429" in r1:
-                print(f'{y}[{Fore.LIGHTRED_EX}!{y}]{w} Rate limited...')
-                time.sleep(.3)
+            print(f'{y}[{Fore.LIGHTRED_EX}!{y}]{w} Rate limited...')
+            time.sleep(.3)
         r1 = str(r1)
         totaltoken = int(totaltoken) + 1
-    
+
         if "400" in r1:
-            print(f'{Fore.RED}[!] Invalid: {w}'+token)
+            print(f'{Fore.RED}[!] Invalid: {w}{token}')
             invalid += 1
-    
+
         if "200" in r1:
             while True:
                 r = requests.get(f'https://discord.com/api/v6/invite/{invite_code}', headers={"Authorization": token})
                 r = str(r)
                 if "429" not in r:
                     break
-                if "429" in r:
-                    print(f'{y}[{Fore.LIGHTRED_EX}!{y}]{w} Rate limited...')
+                print(f'{y}[{Fore.LIGHTRED_EX}!{y}]{w} Rate limited...')
             r = str(r)
-    
+
             if "200" in r:
-                print(f'{Fore.LIGHTGREEN_EX}[!] Valid: {w}'+token)
+                print(f'{Fore.LIGHTGREEN_EX}[!] Valid: {w}{token}')
                 validtokens.append(token)
-                validfile = open("output/valids.txt", "a")
-                validfile.writelines(token+"\n")
-                validfile.close()
+                with open("output/valids.txt", "a") as validfile:
+                    validfile.writelines(token+"\n")
                 valid += 1
-    
+
             if "403" in r:
-                print(f'{Fore.LIGHTRED_EX}[!] Verification required: {w}'+ token)
+                print(f'{Fore.LIGHTRED_EX}[!] Verification required: {w}{token}')
                 locked += 1
 
     print(f"""\n

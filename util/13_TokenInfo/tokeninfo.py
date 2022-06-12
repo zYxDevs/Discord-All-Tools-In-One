@@ -78,14 +78,14 @@ def tokeninfo():
         flags = res_json['flags']
         locale = res_json['locale']
         verified = res_json['verified']
-        
+
         language = languages.get(locale)
         from datetime import datetime
         creation_date = datetime.utcfromtimestamp(((int(user_id) >> 22) + 1420070400000) / 1000).strftime('%d-%m-%Y %H:%M:%S UTC')
         has_nitro = False
         res = requests.get('https://discordapp.com/api/v6/users/@me/billing/subscriptions', headers=headers)
         nitro_data = res.json()
-        has_nitro = bool(len(nitro_data) > 0)
+        has_nitro = len(nitro_data) > 0
 
         if has_nitro:
             d1 = datetime.strptime(nitro_data[0]["current_period_end"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
@@ -109,22 +109,32 @@ def tokeninfo():
                 cc_last = x['last_4']
                 cc_month = str(x['expires_month'])
                 cc_year = str(x['expires_year'])
-                
+
                 data = {
                     'Payment Type': 'Credit Card',
                     'Valid': not x['invalid'],
                     'CC Holder Name': name,
                     'CC Brand': cc_brand.title(),
-                    'CC Number': ''.join(z if (i + 1) % 2 else z + ' ' for i, z in enumerate((cc_first if cc_first else '*') + ('*' * 11) + cc_last)),
-                    'CC Exp. Date': ('0' + cc_month if len(cc_month) < 2 else cc_month) + '/' + cc_year[2:4],
+                    'CC Number': ''.join(
+                        z if (i + 1) % 2 else f'{z} '
+                        for i, z in enumerate(
+                            (cc_first or '*') + '*' * 11 + cc_last
+                        )
+                    ),
+                    'CC Exp. Date': (
+                        f'0{cc_month}' if len(cc_month) < 2 else cc_month
+                    )
+                    + '/'
+                    + cc_year[2:4],
                     'Address 1': address_1,
-                    'Address 2': address_2 if address_2 else '',
+                    'Address 2': address_2 or '',
                     'City': city,
                     'Postal Code': postal_code,
-                    'State': state if state else '',
+                    'State': state or '',
                     'Country': country,
-                    'Default Payment Method': x['default']
+                    'Default Payment Method': x['default'],
                 }
+
 
             elif x['type'] == 2:
                 data = {
@@ -133,13 +143,14 @@ def tokeninfo():
                     'PayPal Name': name,
                     'PayPal Email': x['email'],
                     'Address 1': address_1,
-                    'Address 2': address_2 if address_2 else '',
+                    'Address 2': address_2 or '',
                     'City': city,
                     'Postal Code': postal_code,
-                    'State': state if state else '',
+                    'State': state or '',
                     'Country': country,
-                    'Default Payment Method': x['default']
+                    'Default Payment Method': x['default'],
                 }
+
 
             billing_info.append(data)
 
@@ -149,7 +160,7 @@ def tokeninfo():
         print(f"""          {y}[{w}+{y}]{w} Creation Date: {creation_date}""")
         print(f"""          {y}[{w}+{y}]{w} Avatar URL: {avatar_url if avatar_id else ""}""")
         print(f"""          {y}[{w}+{y}]{w} Token: {token}\n\n""")
-        
+
         print(f"""{y}[{b}#{y}]{w} Nitro Information:""")
         print(f"""          {y}[{w}+{y}]{w} Nitro Status: {has_nitro}""")
 
@@ -159,10 +170,10 @@ def tokeninfo():
             print(f"""          {y}[{w}+{y}]{w} Expires in: None day(s)\n\n""")
 
         print(f"""{y}[{b}#{y}]{w} Contact Information:""")
-        print(f"""          {y}[{w}+{y}]{w} Phone Number: {phone_number if phone_number else ""}""")
-        print(f"""          {y}[{w}+{y}]{w} Email: {email if email else ""}\n\n""")
+        print(f"""          {y}[{w}+{y}]{w} Phone Number: {phone_number or ''}""")
+        print(f"""          {y}[{w}+{y}]{w} Email: {email or ''}\n\n""")
 
-        if len(billing_info) > 0:
+        if billing_info:
             print(f"""{y}[{b}#{y}]{w} Billing Information:""")
             if len(billing_info) == 1:
                 for x in billing_info:
@@ -174,7 +185,7 @@ def tokeninfo():
             else:
                 for i, x in enumerate(billing_info):
                     title = f'Payment Method #{i + 1} ({x["Payment Type"]})'
-                    print('    ' + title)
+                    print(f'    {title}')
                     print('    ' + ('=' * len(title)))
                     for j, (key, val) in enumerate(x.items()):
                         if not val or j == 0:
@@ -201,7 +212,7 @@ def tokeninfo():
     else:
         input(f"""          {y}[{Fore.LIGHTRED_EX }#{y}]{w} An error occurred while sending request""")
         main()
-    
+
     input(f"""\n\n{y}[{b}#{y}]{w} Press ENTER to exit""")
     main()
 

@@ -23,7 +23,7 @@ def settingstheme():
         headers = {'Authorization': token, 'Content-Type': 'application/json'}
 
         if statue_number >= 1 and statue_number <= 4:
-            for loop in range(0, statue_number):
+            for loop in range(statue_number):
                 print(f"""{y}[{w}+{y}]{w} Choose Custom Status #{loop+1}""")
                 choice = str(input(f"""{y}[{b}#{y}]{w} Status #{loop+1}: """))
                 statues.append(choice)
@@ -68,11 +68,10 @@ def settingstheme():
             settingscyclertitle()
             print(f"""{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Cycle successfully completed""")
             input(f"""{y}[{b}#{y}]{w} Press ENTER to exit""")
-            main()
         else:
             print(f"""          {y}[{Fore.LIGHTRED_EX }#{y}]{w} Invalid token""")
             input(f"""\n{y}[{b}#{y}]{w} Press ENTER to exit""")
-            main()
+        main()
     elif choice == "3":
         print(f"""{y}[{w}+{y}]{w} Enter the token of the account you want to Cycle Language""")
         token = input(f"""{y}[{b}#{y}]{w} Token: """)
@@ -93,11 +92,10 @@ def settingstheme():
             settingscyclertitle()
             print(f"""{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Cycle successfully completed""")
             input(f"""{y}[{b}#{y}]{w} Press ENTER to exit""")
-            main()
         else:
-          print(f"""          {y}[{Fore.LIGHTRED_EX }#{y}]{w} Invalid token""")
-          input(f"""\n{y}[{b}#{y}]{w} Press ENTER to exit""")
-          main()
+            print(f"""          {y}[{Fore.LIGHTRED_EX }#{y}]{w} Invalid token""")
+            input(f"""\n{y}[{b}#{y}]{w} Press ENTER to exit""")
+        main()
     else:
         print(f"""          {y}[{Fore.LIGHTRED_EX }#{y}]{w} Invalid choice""")
         input(f"""\n{y}[{b}#{y}]{w} Press ENTER to exit""")

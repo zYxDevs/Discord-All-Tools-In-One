@@ -9,9 +9,15 @@ def selector(token, users):
     clear()
     while True:
         try:
-            response = requests.post(f'https://discordapp.com/api/v9/users/@me/channels', proxies=proxy(), headers=getheaders(token), json={"recipients": users})
+            response = requests.post(
+                'https://discordapp.com/api/v9/users/@me/channels',
+                proxies=proxy(),
+                headers=getheaders(token),
+                json={"recipients": users},
+            )
 
-            if response.status_code == 204 or response.status_code == 200:
+
+            if response.status_code in [204, 200]:
                 print(f"{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Created groupchat")
             elif response.status_code == 429:
                 print(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} Rate limited ({response.json()['retry_after']}ms)")
@@ -27,9 +33,15 @@ def randomizer(token, ID):
     while True:
         users = random.sample(ID, 2)
         try:
-            response = requests.post(f'https://discordapp.com/api/v9/users/@me/channels', proxies={"http": f'{proxy()}'}, headers=getheaders(token), json={"recipients": users})
+            response = requests.post(
+                'https://discordapp.com/api/v9/users/@me/channels',
+                proxies={"http": f'{proxy()}'},
+                headers=getheaders(token),
+                json={"recipients": users},
+            )
 
-            if response.status_code == 204 or response.status_code == 200:
+
+            if response.status_code in [204, 200]:
                 print(f"{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Created groupchat")
             elif response.status_code == 429:
                 print(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} Rate limited ({response.json()['retry_after']}ms)")
@@ -59,7 +71,7 @@ if secondchoice not in [1, 2]:
 
 #if they choose to import the users manually
 if secondchoice == 1:
-    setTitle(f"Creating groupchats")
+    setTitle("Creating groupchats")
     #if they choose specific users
     print(f'\n{y}[{w}+{y}]{w} Input the users you want to create a groupchat with (separate by , id,id2,id3)')
     recipients = input(f'{y}[{b}#{y}]{w} Users ID: ')
@@ -70,13 +82,10 @@ if secondchoice == 1:
     input(f"\n\n\n{y}[{b}#{y}]{w} Press enter to continue (\"ctrl + c\" at anytime to stop)")
     selector(token, user)
 
-#if they choose to randomize the selection
 elif secondchoice == 2:
-    setTitle(f"Creating groupchats")
-    IDs = []
+    setTitle("Creating groupchats")
     #Get all users to spam groupchats with
     friendIds = requests.get("https://discord.com/api/v9/users/@me/relationships", proxies={"http": f'http://{proxy()}'}, headers=getheaders(token)).json()
-    for friend in friendIds:
-        IDs.append(friend['id'])
+    IDs = [friend['id'] for friend in friendIds]
     input(f"\n{y}[{b}#{y}]{w} Press enter to continue (\"ctrl + c\" at anytime to stop)")
     randomizer(token, IDs)

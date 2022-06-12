@@ -28,7 +28,7 @@ def webhookspam():
             )
             clear()
             time.sleep(1)
-            if response.status_code == 204 or response.status_code == 200:
+            if response.status_code in [204, 200]:
                 print(f"""{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Message sent""")
             elif response.status_code == 429:
                 print(f"""{y}[{Fore.LIGHTRED_EX }!{y}]{w} Rate limited ({response.json()['retry_after']}ms)""")
