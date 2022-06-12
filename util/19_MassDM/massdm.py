@@ -10,12 +10,17 @@ def MassDM(token, channels, Message):
     for channel in channels:
         for user in [x["username"]+"#"+x["discriminator"] for x in channel["recipients"]]:
             try:
-                setTitle(f"Messaging "+user)
-                requests.post(f'https://discord.com/api/v9/channels/'+channel['id']+'/messages',
+                setTitle(f"Messaging {user}")
+                requests.post(
+                    'https://discord.com/api/v9/channels/'
+                    + channel['id']
+                    + '/messages',
                     proxies=proxy(),
                     headers={'Authorization': token},
-                    data={"content": f"{Message}"})
-                print(f"{y}[{Fore.LIGHTGREEN_EX }!{y}]{w} Messaged: "+user+Fore.RESET)
+                    data={"content": f"{Message}"},
+                )
+
+                print(f"{y}[{Fore.LIGHTGREEN_EX}!{y}]{w} Messaged: {user}{Fore.RESET}")
             except Exception as e:
                 print(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} The following error has been encountered and is being ignored: {e}")
 

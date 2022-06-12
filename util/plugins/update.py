@@ -37,9 +37,9 @@ def search_for_updates():
                 update_url = f"https://github.com/{link.get('href')}"
         choice = input(f'{y}[{b}#{y}]{w} Update to the latest version (Y/N) ? ')
 
-        if choice.lower() == 'y' or choice.lower() == 'yes':
+        if choice.lower() in ['y', 'yes']:
             print(f"\n{y}[{b}#{y}]{w} Updating...")
-            setTitle(f'@TIO Updating...')
+            setTitle('@TIO Updating...')
 
             if os.path.basename(sys.argv[0]).endswith("exe"):
                 with open("@TIO.zip", 'wb')as zipfile:
@@ -48,18 +48,16 @@ def search_for_updates():
                     filezip.extractall()
                 os.remove("@TIO.zip")
                 cwd = os.getcwd()+'\\@TIO\\'
-                shutil.copyfile(cwd+'Changelog.md', 'Changelog.md')
+                shutil.copyfile(f'{cwd}Changelog.md', 'Changelog.md')
                 try:
                     shutil.copyfile(cwd+os.path.basename(sys.argv[0]), '@TIO.exe')
                 except Exception:
                     pass
-                shutil.copyfile(cwd+'README.md', 'README.md')                   
+                shutil.copyfile(f'{cwd}README.md', 'README.md')
                 shutil.rmtree('@TIO')
                 setTitle('@TIO Update Complete!')
                 input(f"\n{y}[{Fore.GREEN}!{y}]{w} Update Successfully Finished!", end="")
                 os.startfile("@TIO.exe")
-                os._exit(0)
-
             else:
                 new_version_source = requests.get("https://github.com/AstraaDev/Discord-All-Tools-In-One/archive/refs/heads/master.zip")
                 with open("Discord-All-Tools-In-One-main.zip", 'wb')as zipfile:
@@ -72,8 +70,9 @@ def search_for_updates():
                 shutil.rmtree(cwd)
                 setTitle('@TIO Update Complete!')
                 input(f"\n{y}[{Fore.GREEN}!{y}]{w} Update Successfully Finished!")
-                if os.path.exists(os.getcwd()+'setup.bat'):
+                if os.path.exists(f'{os.getcwd()}setup.bat'):
                     os.startfile("setup.bat")
-                elif os.path.exists(os.getcwd()+'start.bat'):
+                elif os.path.exists(f'{os.getcwd()}start.bat'):
                     os.startfile("start.bat")
-                os._exit(0)
+
+            os._exit(0)

